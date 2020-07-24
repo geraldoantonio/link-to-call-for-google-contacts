@@ -8,6 +8,7 @@
     "storage"
   ],
   "page_action": {
+    "default_title": "Link to Call",
     "default_icon": {
       "16": "images/extension_icon16.png",
       "32": "images/extension_icon32.png",
@@ -15,10 +16,13 @@
       "128": "images/extension_icon128.png"
     }
   },
+  "icons": {
+    "16": "images/extension_icon16.png",
+    "32": "images/extension_icon32.png",
+    "48": "images/extension_icon48.png",
+    "128": "images/extension_icon128.png"
+  },
   "background": {
-    "scripts": [
-      "background.js"
-    ],
     "persistente": false
   },
   "content_scripts": [
@@ -30,8 +34,9 @@
         "contentScript.js"
       ]
     }
-  ], 
-  "web_accessible_resources": ["images/button-phone.ico"]
-
-
+  ],
+  "web_accessible_resources": [
+    "images/button-phone.ico"
+  ],
+  "homepage_url": "https://github.com/geraldoantonio/link-to-call-for-google-contacts/"
 }
