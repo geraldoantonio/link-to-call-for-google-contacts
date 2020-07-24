@@ -1,0 +1,37 @@
+{
+  "name": "Link To Call For Google Contacts",
+  "version": "1.0",
+  "description": "Add link call for google contact!",
+  "manifest_version": 2,
+  "author": "Geraldo Júnior",
+  "permissions": [
+    "storage"
+  ],
+  "page_action": {
+    "default_icon": {
+      "16": "images/extension_icon16.png",
+      "32": "images/extension_icon32.png",
+      "48": "images/extension_icon48.png",
+      "128": "images/extension_icon128.png"
+    }
+  },
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "persistente": false
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://contacts.google.com/*"
+      ],
+      "js": [
+        "contentScript.js"
+      ]
+    }
+  ], 
+  "web_accessible_resources": ["images/button-phone.ico"]
+
+
+}
