@@ -5,36 +5,53 @@ let addCallButtonToElement = true;
 const isRenderDialog = () => !!(document.querySelector('[role="dialog"]'));
 
 const addLinkPhone = () => {
-  const elements = document.querySelectorAll('span.OCiUOb');
+  const hangoutButtons = document.querySelectorAll('[jsname="RA4LPe"]')
 
-  elements.forEach(element=>{
-    let phoneNumber = element.parentElement.querySelector('[dir=ltr]').innerText;
+  hangoutButtons.forEach(element=>{
+    const wrapper = element.parentElement;
+    const phoneNumber = element.dataset.tooltip.replace(/[^0-9\.]+/g, '');
 
-    let button = document.createElement('button');
-        button.classList = 'VfPpkd-Bz112c-LgbsSe yHy1rc eT1oJ paacgc';
+    const linkButtonPhone = document.createElement('a');
+          linkButtonPhone.href = `tel:${phoneNumber}`;
+          linkButtonPhone.appendChild(imagePhoneCall());
 
-    let linkButton = document.createElement('a');
-        linkButton.href = `tel:${phoneNumber}`;
-        linkButton.appendChild(imagePhoneCall(phoneNumber));
+    const linkButtonWhatsapp = document.createElement('a');
+          linkButtonWhatsapp.href = `https://web.whatsapp.com/send?phone=${phoneNumber}`;
+          linkButtonWhatsapp.appendChild(imageWhatsApp());
 
-        button.appendChild(linkButton);
-
-    element.appendChild(button);
+    wrapper.appendChild(addButtonElement(linkButtonPhone));
+    wrapper.appendChild(addButtonElement(linkButtonWhatsapp));
   });
 
   addCallButtonToElement = false;
-}
+};
 
-const imagePhoneCall = (title='phone call') => {
-  let iconUrl = chrome.runtime.getURL('images/button-phone.ico');
-  let phoneIcon = document.createElement('img');
-      phoneIcon.src = iconUrl;
-      phoneIcon.title = title;
-      phoneIcon.style.width='24px'; 
-      phoneIcon.style.height='24px'; 
+const imageToButton = (iconUrl='', title='') => {
+  const phoneIcon = document.createElement('img');
+        phoneIcon.src = iconUrl;
+        phoneIcon.title = title;
+        phoneIcon.style.width='24px'; 
+        phoneIcon.style.height='24px'; 
 
   return phoneIcon;
 }
+
+const imagePhoneCall = () => {
+  const iconUrl = chrome.runtime.getURL('images/button-phone.ico');
+  return imageToButton(iconUrl, 'Send to phone')
+};
+
+const imageWhatsApp = () => {
+  const iconUrl = chrome.runtime.getURL('images/button-whatsapp.png');
+  return imageToButton(iconUrl, 'Send to whatsapp');
+};
+
+const addButtonElement = (content) => {
+  const element = document.createElement('button');
+        element.classList = 'VfPpkd-Bz112c-LgbsSe yHy1rc eT1oJ paacgc';
+        element.appendChild(content);
+  return element;
+};
 
 setInterval(() => {
   if (isRenderDialog() && addCallButtonToElement) addLinkPhone();
